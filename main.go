@@ -2,7 +2,10 @@ package main
 
 import (
 	"embed"
+	"log"
+	"os"
 
+	"net/http"
 	_ "net/http/pprof"
 
 	"github.com/wailsapp/wails/v2"
@@ -12,6 +15,14 @@ import (
 
 //go:embed all:frontend/dist
 var assets embed.FS
+
+func init() {
+	go func() {
+		log.Println(http.ListenAndServe("localhost:6060", nil))
+	}()
+	os.Setenv("HTTP_PROXY", "http://localhost:7890")
+	os.Setenv("HTTPS_PROXY", "http://localhost:7890")
+}
 
 func main() {
 	// Create an instance of the app structure
