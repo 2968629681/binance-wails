@@ -1,0 +1,2 @@
+proxy: 
+  http: "http://localhost:7890"
