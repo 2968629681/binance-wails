@@ -9,6 +9,7 @@ import (
 	"net/http"
 	_ "net/http/pprof"
 
+	"github.com/spf13/viper"
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
@@ -34,8 +35,8 @@ func main() {
 	// Create application with options
 	err := wails.Run(&options.App{
 		Title:  "binance-wails",
-		Width:  1024,
-		Height: 768,
+		Width:  viper.GetInt("window.width"),
+		Height: viper.GetInt("window.height"),
 		AssetServer: &assetserver.Options{
 			Assets: assets,
 		},

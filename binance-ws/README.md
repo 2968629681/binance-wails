@@ -21,7 +21,7 @@ type RequestMessage struct {
 ```json
 {
 	"method": "method",
-	"param": "param",
+	"param": "param"
 }
 ```
 
@@ -47,7 +47,7 @@ Param只有订阅的时候需要填写
 ```json
 {
 	"method": "SUBSCRIBE",
-	"param": "DEPTH@BTCUSDT@20",
+	"param": "DEPTH@BTCUSDT@20"
 }
 ```
 
@@ -62,7 +62,7 @@ Param只有订阅的时候需要填写
 ```json
 {
 	"method": "SUBSCRIBE",
-	"param": "DEPTH100MS@BTCUSDT@20",
+	"param": "DEPTH100MS@BTCUSDT@20"
 }
 ```
 
@@ -90,6 +90,6 @@ Param只有订阅的时候需要填写
 ```json
 {
 	"method": "SUBSCRIBE",
-	"param": "KLINE@BTCUSDT@1m",
+	"param": "KLINE@BTCUSDT@1m"
 }
 ```
