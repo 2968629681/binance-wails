@@ -1,7 +1,7 @@
 run: 
 	@wails dev
 
-build:
+build-binary:
 	@wails build
 
 clean:
