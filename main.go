@@ -26,7 +26,7 @@ func init() {
 }
 
 func main() {
-	go binancews.Run()
+	go binancews.RunServer()
 
 	// Create an instance of the app structure
 	app := NewApp()

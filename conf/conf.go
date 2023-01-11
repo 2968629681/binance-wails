@@ -25,6 +25,6 @@ func Init() {
 }
 
 func setProxy() {
-	os.Setenv("HTTP_PROXY", viper.GetString("proxy.http"))
-	os.Setenv("HTTPS_PROXY", viper.GetString("proxy.http"))
+	os.Setenv("HTTP_PROXY", viper.GetString("proxy"))
+	os.Setenv("HTTPS_PROXY", viper.GetString("proxy"))
 }

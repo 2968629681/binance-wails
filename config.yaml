@@ -1,2 +1,5 @@
-proxy: 
-  http: "http://localhost:7890"
+proxy: "http://localhost:7890"
+
+binancews:
+  addr: "localhost:2303"
+  path: "/wsss"
