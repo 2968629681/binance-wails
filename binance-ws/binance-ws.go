@@ -2,7 +2,6 @@ package binancews
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"log"
@@ -147,15 +146,10 @@ func (b *BinanceWs) listenReadMessage(ch chan RequestMessage, ctx context.Contex
 			break
 		default:
 			var message = RequestMessage{}
-			// err := b.ws.ReadJSON(&message)
-			_, msg, err := b.ws.ReadMessage()
+			err := b.ws.ReadJSON(&message)
 			if err != nil {
 				b.ws.WriteMessage(websocket.TextMessage, []byte("Read message failed"))
 				return
-			}
-			json.Unmarshal(msg, &message)
-			if message.Method == "" {
-				b.ws.WriteMessage(websocket.TextMessage, msg)
 			}
 
 			log.Printf("Recive message: [method: %v params: %v]\n", message.Method, message.Param)
