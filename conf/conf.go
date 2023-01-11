@@ -22,12 +22,14 @@ var (
 	configContent = `window:
   width: 1024
   height: 768
-
 proxy: "http://localhost:7890"
-
 binancews:
   addr: "localhost:2303"
   path: "/ws"
+binance: 
+  apiKey: ""
+  secretKey: ""
+
 `
 )
 
