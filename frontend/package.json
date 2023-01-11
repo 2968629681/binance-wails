@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "klinecharts": "^9.0.0-alpha3",
     "vue": "^3.2.37"
   },
   "devDependencies": {

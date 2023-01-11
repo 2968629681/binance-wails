@@ -1,4 +1,4 @@
-proxy: "http://localhost:7890"
+proxy: "http://localhost:10809"
 
 binancews:
   addr: "localhost:2303"
