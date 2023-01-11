@@ -9,6 +9,7 @@ const (
 const (
 	DEPTH      = "DEPTH"
 	DEPTH100MS = "DEPTH100MS"
+	KLINE      = "KLINE"
 	AGGTRADE   = "AGGTRADE"
 )
 

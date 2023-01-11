@@ -2,6 +2,7 @@ package binancews
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"log"
@@ -125,6 +126,13 @@ func (b *BinanceWs) Parse(r RequestMessage) error {
 			return ParamsError
 		}
 		b.partialDepthServe100MsFunc(strs[1], strs[2])
+
+	// KLINE@symbol@interval
+	case KLINE:
+		if len(strs) < 3 {
+			return ParamsError
+		}
+		b.kLineServeFunc(strs[1], strs[2])
 	default:
 		return ParamsError
 	}
@@ -139,11 +147,17 @@ func (b *BinanceWs) listenReadMessage(ch chan RequestMessage, ctx context.Contex
 			break
 		default:
 			var message = RequestMessage{}
-			err := b.ws.ReadJSON(&message)
+			// err := b.ws.ReadJSON(&message)
+			_, msg, err := b.ws.ReadMessage()
 			if err != nil {
 				b.ws.WriteMessage(websocket.TextMessage, []byte("Read message failed"))
 				return
 			}
+			json.Unmarshal(msg, &message)
+			if message.Method == "" {
+				b.ws.WriteMessage(websocket.TextMessage, msg)
+			}
+
 			log.Printf("Recive message: [method: %v params: %v]\n", message.Method, message.Param)
 			ch <- message
 		}
@@ -176,5 +190,19 @@ func (b *BinanceWs) partialDepthServeFunc(symbol, level string) {
 
 	b.f = func() (chan struct{}, chan struct{}, error) {
 		return binance.WsPartialDepthServe(symbol, level, wsDepthHandler, errHandler)
+	}
+}
+
+func (b *BinanceWs) kLineServeFunc(symbol, interval string) {
+	wsKlineHandler := func(event *binance.WsKlineEvent) {
+		b.ws.WriteJSON(event)
+	}
+
+	errHandler := func(err error) {
+		b.ws.WriteMessage(websocket.TextMessage, []byte(fmt.Sprintf("Error: %v", err)))
+	}
+
+	b.f = func() (chan struct{}, chan struct{}, error) {
+		return binance.WsKlineServe(symbol, interval, wsKlineHandler, errHandler)
 	}
 }
