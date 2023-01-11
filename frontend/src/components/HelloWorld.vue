@@ -6,7 +6,7 @@
     return{
           websock: null, //建立的连接
           lockReconnect: false, //是否真正建立连接
-          timeout: 60 * 1000 * 10, //十分钟一次心跳
+          timeout: 60 * 1000 * 8, //8分组一次心跳
           timeoutObj: null, //心跳心跳倒计时
           serverTimeoutObj: null, //心跳倒计时
           timeoutnum: null, //断开 重连倒计时
@@ -205,9 +205,10 @@
           self.serverTimeoutObj && clearTimeout(self.serverTimeoutObj);
           self.timeoutObj = setTimeout(function () {
             //这里发送一个心跳，后端收到后，返回一个心跳消息
-            if (self.websock.readyState == 1) {
+            if (self.websock.readyState == 'PONG') {
               //如果连接正常
-              self.websock.send("PING");
+              let temp = {"method": "PING",}
+              self.websock.send(JSON.stringify(temp));
             } else {
               //否则重连
               self.reconnect();
@@ -248,7 +249,6 @@
             timestamp: null, // 时间戳，毫秒级别，必要字段
             time: null // 时间戳，一分钟更新一次
           }
-          console.log(redata);
           temp.open=parseFloat(redata.k.o)
           temp.close=parseFloat(redata.k.c)
           temp.high=parseFloat(redata.k.h)
@@ -260,7 +260,6 @@
           if(len == 0) this.mapdata.push(temp)
           else if(temp.timestamp != this.mapdata[len-1].timestamp) this.mapdata.push(temp)
           else this.mapdata[len-1]=temp
-          console.log(temp.timestamp);
           this.kLineChart.applyNewData(this.mapdata)
           this.reset();
         },
@@ -282,7 +281,7 @@
 </script>
 
 <template>
-  <div id="init-kline" style="height: 100%;width: 100%;"/>
+  <div id="init-kline" style="width: 80%;height: 80%;"/>
 </template>
 
 <style scoped>
