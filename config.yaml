@@ -1,5 +1,0 @@
-proxy: "http://localhost:10809"
-
-binancews:
-  addr: "localhost:2303"
-  path: "/ws"

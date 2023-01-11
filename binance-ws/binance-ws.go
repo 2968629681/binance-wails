@@ -105,13 +105,12 @@ var (
 )
 
 func (b *BinanceWs) Parse(r RequestMessage) error {
-	r.Param = strings.ToUpper(r.Param)
 	strs := strings.Split(r.Param, "@")
 	if len(strs) < 1 {
 		return ParamsError
 	}
 
-	switch strs[0] {
+	switch strings.ToUpper(strs[0]) {
 	// DEPTH@symbel@level
 	case DEPTH:
 		if len(strs) < 3 {
